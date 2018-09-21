@@ -22,13 +22,17 @@ class TicketSeller(event: String) extends Actor {
 
   override def receive: Receive = {
     case Add(newTickets) => tickets = tickets ++ newTickets
+
     case Buy(nrOfTickets) =>
       val entries = tickets.take(nrOfTickets)
       if(entries.size >= nrOfTickets) {
         sender() ! Tickets(event, entries)
         tickets = tickets.drop(nrOfTickets)
       } else sender() ! Tickets(event)
-    case GetEvent => sender() ! Some(BoxOffice.Event(event, tickets.size))
+
+    case GetEvent =>
+      sender() ! Some(BoxOffice.Event(event, tickets.size))
+
     case Cancel =>
       sender() ! Some(BoxOffice.Event(event, tickets.size))
       self ! PoisonPill

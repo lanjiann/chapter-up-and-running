@@ -16,7 +16,7 @@ class RestApi(system: ActorSystem, timeout: Timeout)
   implicit val requestTimeout: Timeout = timeout
   implicit def executionContext: ExecutionContextExecutor = system.dispatcher
 
-  def createBoxOffice : ActorRef = system.actorOf(BoxOffice.props, BoxOffice.name)
+  def createBoxOffice: ActorRef = system.actorOf(BoxOffice.props, BoxOffice.name)
 }
 
 trait RestRoutes extends BoxOfficeApi

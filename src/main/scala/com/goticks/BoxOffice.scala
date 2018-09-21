@@ -48,7 +48,7 @@ class BoxOffice(implicit timeout: Timeout) extends Actor {
     case GetTickets(event, tickets) =>
       def notFound(): Unit = sender() ! TicketSeller.Tickets(event)
       def buy(child: ActorRef): Unit =
-        child.forward(TicketSeller.Buy(tickets))
+        child forward TicketSeller.Buy(tickets)
 
       context.child(event).fold(notFound())(buy)
 
